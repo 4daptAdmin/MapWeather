@@ -7,50 +7,44 @@ import PropTypes from "prop-types";
 const weatherCases = {
   Rain: {
     colors: ["#00C6FB", "#005BEA"],
-    title: "Raining like a MF",
-    subtitle: "For more info look outside",
+    title: "비",
+    subtitle: "비가오고있음..",
     icon: "weather-rainy"
   },
   Clear: {
     colors: ["#FEF253", "#FF7300"],
-    title: "Sunny as fuck",
-    subtitle: "Go get your ass burnt",
+    title: "맑음",
+    subtitle: "밖으로",
     icon: "weather-sunny"
   },
   Thunderstorm: {
     colors: ["#00ECBC", "#007ADF"],
-    title: "Thunderstorm in the house",
-    subtitle: "Actually, outside of the house",
+    title: "천둥",
+    subtitle: "천둥",
     icon: "weather-lightning"
   },
   Clouds: {
     colors: ["#D7D2CC", "#304352"],
-    title: "Clouds",
-    subtitle: "I know, fucking boring",
+    title: "흐림",
+    subtitle: "Clouds",
     icon: "weather-cloudy"
   },
   Snow: {
     colors: ["#7DE2FC", "#B9B6E5"],
-    title: "Cold as balls",
-    subtitle: "Do you want to build a snowman? Fuck no.",
+    title: "눈",
+    subtitle: "눈",
     icon: "weather-snowy"
-  },
-  Drizzle: {
-    colors: ["#89F7FE", "#66A6FF"],
-    title: "Drizzle",
-    subtitle: "Is like rain, but gay 🏳️‍🌈",
-    icon: "weather-hail"
   },
   Haze: {
     colors: ["#89F7FE", "#66A6FF"],
-    title: "Haze",
-    subtitle: "Don't know what that is 💩",
+    title: "안개",
+    subtitle: "Haze",
     icon: "weather-hail"
   },
   Mist: {
     colors: ["#D7D2CC", "#304352"],
-    title: "Mist!",
-    subtitle: "It's like you have no glasses on.",
+    title: "안개!",
+    subtitle: "안개!!!",
     icon: "weather-fog"
   }
 };

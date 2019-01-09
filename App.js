@@ -18,9 +18,9 @@ export default class App extends Component {
     navigator.geolocation.getCurrentPosition(
       position => {
         this._getWeather(position.coords.latitude, position.coords.longitude);
-        position.coords.latitudeDelta = 0.0622;
-        position.coords.longitudeDelta = 0.0421;
-        console.log(position.coords);
+        position.coords.latitudeDelta = 0.0922;
+        position.coords.longitudeDelta = 0.0921;
+//        console.log(position.coords);
         this.setState({
           userLocation: position.coords,
         });
@@ -46,14 +46,32 @@ export default class App extends Component {
       });
   };
 
+
+  _onPress = (e) => {
+    console.log(e.nativeEvent)
+    e.nativeEvent.coordinate.latitudeDelta = 0.0922;
+    e.nativeEvent.coordinate.longitudeDelta = 0.0921;  
+    this.setState({
+      userLocation: e.nativeEvent.coordinate,
+      isLoaded: false
+    });
+    this._getWeather(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude);
+  };
+
+
+  _onRegionChange = (region) => {
+    this.setState({ region });
+  }
+
   render() {
     const { isLoaded, error, temperature, name } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
-       
+      
         <UserMap
           userLocation={this.state.userLocation}
+          onPress1={this._onPress}
         />
        
         {isLoaded ? (
@@ -63,7 +81,7 @@ export default class App extends Component {
           />
         ) : (
           <View style={styles.loading}>
-            <Text style={styles.loadingText}>Getting the fucking weather</Text>
+            <Text style={styles.loadingText}>날씨정보가져오는중..</Text>
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
           </View>
         )}
@@ -89,7 +107,7 @@ const styles = StyleSheet.create({
     paddingLeft: 25
   },
   loadingText: {
-    fontSize: 38,
+    fontSize: 25,
     marginBottom: 24
   }
 });
