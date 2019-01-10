@@ -20,7 +20,7 @@ const usersMap = props => {
           longitudeDelta: 0.0421
         }}
         region={props.userLocation}
-        onPress={props.onPress1}
+        onRegionChangeComplete={props.onRegionChangeComplete}
         style={styles.map}
       >
         {userLocationMarker}

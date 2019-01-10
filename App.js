@@ -58,9 +58,13 @@ export default class App extends Component {
     this._getWeather(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude);
   };
 
-
-  _onRegionChange = (region) => {
-    this.setState({ region });
+  _onRegionChangeComplete = (region) => {
+    console.log(region)
+    this.setState({
+      userLocation: region,
+      isLoaded: false
+    });
+    this._getWeather(region.latitude, region.longitude);
   }
 
   render() {
@@ -71,7 +75,7 @@ export default class App extends Component {
       
         <UserMap
           userLocation={this.state.userLocation}
-          onPress1={this._onPress}
+          onRegionChangeComplete={this._onRegionChangeComplete}
         />
        
         {isLoaded ? (
