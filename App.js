@@ -3,7 +3,9 @@ import { StyleSheet, Text, View, StatusBar, Button } from 'react-native'
 import Weather from './Weather'
 import UserMap from './UserMap'
 
+const API_KEY_W = '8042367a40d903407a2eee2c0cfa759a'
 const API_KEY = 'd5tom7ZXIn5TlnHxjc3L8JNrHAYleWdLt67H8AKAoMAXDv0KBZlCJ0XNXmCULfKPoy07PtpG762TCZ8%2FhA9omQ%3D%3D'
+
 export default class App extends Component {
   state = {
     isLoaded: false,
@@ -30,9 +32,9 @@ export default class App extends Component {
       }
     )
   }
-  /*
-  _getWeather = (lat, long) => {
-    fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=${API_KEY}`)
+
+  _getWeatherWorld = (lat, long) => {
+    fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&APPID=${API_KEY_W}`)
       .then(response => response.json())
       .then(json => {
         this.setState({
@@ -41,7 +43,7 @@ export default class App extends Component {
           isLoaded: true
         })
       })
-  } */
+  }
 
   // ----------------------------------------------------------
   // 기상청 홈페이지에서 발췌한 변환 함수
@@ -104,48 +106,50 @@ export default class App extends Component {
     )
       .then(response => response.json())
       .then(json => {
-        // console.log(json)
-        var rain_state = json.response.body.items.item[1].category // PYT(강수형태)
-        var sky = json.response.body.items.item[3].category // SKY(하늘상태)
-        var temperature = json.response.body.items.item[4].fcstValue // T3H (3시간 기온)
-        var name = 'Clear'
+        // console.log(json.response.header.resultCode)
+        if (json.response.header.resultCode == '0000') {
+          var rain_state = json.response.body.items.item[1].category // PYT(강수형태)
+          var sky = json.response.body.items.item[3].category // SKY(하늘상태)
+          var temperature = json.response.body.items.item[4].fcstValue // T3H (3시간 기온)
+          var name = 'Clear'
 
-        if (rain_state != 0) {
-          switch (rain_state) {
-            case 1:
-              name = 'Rain'
-              break
-            case 2:
-              name = 'Haze'
-              break
-            case 3:
-              name = 'Snow'
-              break
-          }
+          if (rain_state != 0) {
+            switch (rain_state) {
+              case 1:
+                name = 'Rain'
+                break
+              case 2:
+                name = 'Haze'
+                break
+              case 3:
+                name = 'Snow'
+                break
+            }
+          } else {
+            switch (sky) {
+              case 1:
+                name = 'Clear' // 맑음
+                break
+              case 2:
+                name = 'Clouds' // 구름조금
+                break
+              case 3:
+                name = 'Clouds' // 구름많음
+                break
+              case 4:
+                name = 'Clouds' // 흐림
+                break
+            }
+          } // if 종료
+
+          this.setState({
+            temperature: temperature,
+            name: name,
+            isLoaded: true
+          })
         } else {
-          switch (sky) {
-            case 1:
-              name = 'Clear' // 맑음
-              break
-            case 2:
-              name = 'Clouds' // 구름조금
-              break
-            case 3:
-              name = 'Clouds' // 구름많음
-              break
-            case 4:
-              name = 'Clouds' // 흐림
-              break
-          }
-        } // if 종료
-
-        this.setState({
-          temperature: temperature,
-          name: name,
-          isLoaded: true
-        })
-
-        console.log(temperature)
+          this._getWeatherWorld(lat, long)
+        }
       })
   }
 
